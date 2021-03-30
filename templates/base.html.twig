@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}">
 
         <title>{% block title %}Rencontres{% endblock %}</title>
 
@@ -28,13 +29,20 @@
                     </div>
 
                 </nav>
+                {% if app.user %}
                 <nav class="navbar navbar-light bg-light">
                     <div class="container-fluid">
-                        <button class="btn btn-outline-danger me-2" type="submit">Connexion</button>
-                        <button class="btn btn-danger" type="submit">S'inscrire</button>
-
+                        <a class="btn btn-outline-danger me-2" href="{{ path('app_logout') }}">Deconnexion</a>
                     </div>
                 </nav>
+                {% else %}
+                <nav class="navbar navbar-light bg-light">
+                    <div class="container-fluid">
+                        <a class="btn btn-outline-danger me-2" href="{{ path('app_login') }}">Connexion</a>
+                        <a class="btn btn-danger" href="{{ path('app_register') }}">S'inscrire</a>
+                    </div>
+                </nav>
+                {% endif %}
             </div>
         </nav>
     </header>
