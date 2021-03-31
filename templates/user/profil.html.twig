@@ -4,16 +4,21 @@
 <section class="py-2 text-center container">
     <div class="h-100 p-5 text-white bg-dark rounded-3">
         <div class="row py-lg-5">
-
-
-        <h2>{{ app.user.pseudo }}</h2>
-        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Modifier mon profil &raquo;</a></p>
-
+            <div class="row featurette">
+                <div class="col-md-7 order-md-2">
+                    <h2 class="featurette-heading">{{ app.user.pseudo }}</h2>
+                    <p> Ville : {{ app.user.profil.ville }} | Age :</p>
+                    <p class="lead">Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+                </div>
+                <div class="col-md-5 order-md-1">
+                    <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="300" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em"></text></svg>
+                </div>
+            </div>
+        <p><a class="btn btn-light me-6 mb-3" href="#" role="button">Modifier mon profil</a></p>
         </div>
     </div>
     </div>
-
+</section>
 {% endblock %}
 
 {% block title %}Votre profil{% endblock %}
