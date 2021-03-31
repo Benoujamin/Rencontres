@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Preference;
 use App\Entity\Profil;
 use App\Entity\ProfilPicture;
 use App\Entity\User;
+use App\Form\PreferenceType;
 use App\Form\ProfilPictureType;
 use App\Form\ProfilType;
 use App\Repository\ProfilRepository;
@@ -32,10 +34,10 @@ class UserController extends AbstractController
      * @param TokenInterface $token
      * @return Response
      */
-    public function create(Request $request, EntityManagerInterface $entityManager, ProfilRepository $profilRepository, UserRepository $userRepository): Response
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
 
-        /** @var User $user */
+
         $user = $this->getUser();
 
         $profil = new Profil();
@@ -49,7 +51,6 @@ class UserController extends AbstractController
         if($profilForm->isSubmitted() && $profilForm->isValid()) {
 
             $user ->setProfil($profil);
-
             $entityManager->persist($profil);
             $entityManager->flush();
 
@@ -110,7 +111,7 @@ class UserController extends AbstractController
             $entityManager->persist($profilPicture);
             $entityManager->flush();
 
-            $this->addFlash('danger', 'Votre profil a bien été crée !');
+
             return $this->redirectToRoute('main_home');
 
         }
@@ -127,8 +128,37 @@ class UserController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+
         return $this->render('user/profil.html.twig', [
             "user" => $user
+        ]);
+    }
+
+    /**
+     * @Route("/user/set-preferences", name="user_set_preferences")
+     */
+    public function setPreferences(Request $request, EntityManagerInterface $entityManager): Response
+    {
+
+        $preference = new Preference();
+        $preferenceForm = $this->createForm(PreferenceType::class, $preference);
+
+        $preferenceForm->handleRequest($request);
+
+        if($preferenceForm->isSubmitted() && $preferenceForm->isValid()) {
+
+            // TO DO : $user->setpreferences($preference)
+
+            $entityManager->persist($preference);
+            $entityManager->flush();
+
+            $this->addFlash('danger', 'Votre profil a bien été crée !');
+            return $this->redirectToRoute('main_home');
+        }
+
+
+        return $this->render('user/set-preferences.html.twig', [
+            'preferenceForm' => $preferenceForm->createView()
         ]);
     }
 }

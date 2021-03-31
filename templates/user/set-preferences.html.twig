@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(preferenceForm) }}
+    {{ form_row(preferenceForm.departements_recherches) }}
+
+    <button type="submit" class="btn btn-outline-light mt-5 mb-3">S'inscrire</button>
+    {{ form_end(preferenceForm) }}
+
+{% endblock %}
+
+{% block title %}Renseigner vos préférences
+
+{% endblock %}
+
