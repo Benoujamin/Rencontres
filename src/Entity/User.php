@@ -49,6 +49,16 @@ class User implements UserInterface
      */
     private $dateCreated;
 
+    /**
+     * @ORM\OneToOne(targetEntity=profil::class, inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $profil;
+
+    /**
+     * @ORM\OneToOne(targetEntity=ProfilPicture::class, inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $photo;
+
 
     public function getEmail(): ?string
     {
@@ -146,6 +156,30 @@ class User implements UserInterface
     public function setDateCreated(\DateTimeInterface $dateCreated): self
     {
         $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+
+    public function getProfil(): ?profil
+    {
+        return $this->profil;
+    }
+
+    public function setProfil(?profil $profil): self
+    {
+        $this->profil = $profil;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?ProfilPicture
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?ProfilPicture $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }
