@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Complète ton profil{% endblock %}
+
+{% block body %}
+<link href="{{ asset('css/signin.css')}}" rel="stylesheet">
+<body class="text-center">
+<main class="form-signin">
+    <section class="py-2 text-center container">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+            <h1 class="h4 mb-4 fw-normal">Complète ton profil !</h1>
+
+            {{ form_start(profilForm) }}
+            {{ form_row(profilForm.date_naissance) }}
+            {{ form_row(profilForm.sexe) }}
+            {{ form_row(profilForm.code_postal) }}
+            {{ form_row(profilForm.ville) }}
+            <button type="submit" class="btn btn-outline-light mt-5 mb-3">Register</button>
+            {{ form_end(profilForm) }}
+
+        </div>
+    </section>
+</main>
+
+{% endblock %}
+
