@@ -17,24 +17,26 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\String\ByteString;
 
 class UserController extends AbstractController
 {
     /**
      *
-     * @Route("user{id}/create-profil", name="user_create_profil")
-     * @param $id
+     * @Route("/user/create-profil", name="user_create_profil")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @param ProfilRepository $profilRepository
      * @param UserRepository $userRepository
+     * @param TokenInterface $token
      * @return Response
      */
-    public function create($id, Request $request, EntityManagerInterface $entityManager, ProfilRepository $profilRepository, UserRepository $userRepository): Response
+    public function create(Request $request, EntityManagerInterface $entityManager, ProfilRepository $profilRepository, UserRepository $userRepository): Response
     {
 
-        $user = $userRepository->find($id);
+        /** @var User $user */
+        $user = $this->getUser();
 
         $profil = new Profil();
 
@@ -51,9 +53,8 @@ class UserController extends AbstractController
             $entityManager->persist($profil);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre profil a été crée');
 
-            return $this->redirectToRoute('user_create_profil', ['id' =>$id]);
+            return $this->redirectToRoute('user_add_photo');
         }
 
         return $this->render('user/createprofil.html.twig', [
@@ -63,16 +64,20 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/user{id}/add-photo", name="user_create_profil")
+     * @Route("/user/add-photo", name="user_add_photo")
      * @param $id
      * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @param $userRepository
+     * @param UserRepository $userRepository
+     * @param TokenInterface $token
      * @return Response
+     * @throws \Exception
      */
-    public function addPhoto($id, Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
+    public function addPhoto(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
-        $user = $userRepository->find($id);
+
+        /** @var User $user */
+        $user = $this->getUser();
 
         $profilPicture = new ProfilPicture();
         $pictureForm = $this->createForm(ProfilPictureType::class, $profilPicture);
@@ -105,10 +110,25 @@ class UserController extends AbstractController
             $entityManager->persist($profilPicture);
             $entityManager->flush();
 
+            $this->addFlash('danger', 'Votre profil a bien été crée !');
+            return $this->redirectToRoute('main_home');
+
         }
 
         return $this->render('user/add-photo.html.twig', ['pictureForm' => $pictureForm->createView()
 
+        ]);
+    }
+
+    /**
+     * @Route("/user/profile", name="user_profil")
+     */
+    public function showProfile(): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        return $this->render('user/profil.html.twig', [
+            "user" => $user
         ]);
     }
 }

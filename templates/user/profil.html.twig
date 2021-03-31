@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<section class="py-2 text-center container">
+    <div class="h-100 p-5 text-white bg-dark rounded-3">
+        <div class="row py-lg-5">
+
+
+        <h2>{{ app.user.pseudo }}</h2>
+        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+        <p><a class="btn btn-secondary" href="#" role="button">Modifier mon profil &raquo;</a></p>
+
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block title %}Votre profil{% endblock %}

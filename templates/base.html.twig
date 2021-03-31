@@ -27,8 +27,7 @@
                         <span class="icon mr-2"><i class="far fa-heart" ></i></span>
                         <a class="navbar-brand mb-0 h1" href="{{ path('main_home') }}">LoveBirds</a>
                         <span class="icon mr-2"><i class="fas fa-id-badge"></i></span>
-                        <a class="navbar-brand justify-content-center " href="{{ path('main_home') }}">Mon Profil</a>
-
+                        <a class="navbar-brand justify-content-center " href="{{ path('user_profil') }}">Mon Profil</a>
 
                     </div>
 
@@ -60,6 +59,13 @@
         </nav>
     </header>
 
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     <main>
 
         {% block body %}

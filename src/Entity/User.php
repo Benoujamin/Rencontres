@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet email! ")
+ * @UniqueEntity(fields={"pseudo"}, message="Désolé, ce pseudo est déjà pris !")
  *
  */
 class User implements UserInterface
@@ -22,7 +24,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @Assert\Type(type="email", message="Veuillez saisir une adresse email!")
+     *@Assert\Email(message="Veuillez saisir une adresse email valide!")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -70,6 +72,13 @@ class User implements UserInterface
         $this->email = $email;
 
         return $this;
+
+
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     /**
